@@ -17,6 +17,9 @@ public class Sprite implements Drawer{
     private BufferedImage cropImage;
     private HashMap<String, Animation> animations;
     private Animation actualState;
+    private Animation nextAnimation;
+    private int animationLenght;
+    private int cmpt;
 
     public Sprite(String path, Position position, int width, int height) {
         this.width = width;
@@ -62,10 +65,30 @@ public class Sprite implements Drawer{
         actualState = animations.get(state);
     }
 
+    public void setActualState(String state, int numberAnimation, String nextState) {
+        actualState = animations.get(state);
+        nextAnimation = animations.get(nextState);
+
+        if (actualState.getSpeed() > 0) {
+            animationLenght = actualState.getLength()/actualState.getSpeed()*numberAnimation;
+        }
+        else {
+            animationLenght = actualState.getLength()*(-actualState.getSpeed())*numberAnimation;
+        }
+
+        cmpt = 0;
+    }
+
     @Override
     public void draw(BufferedImage bufferedImage) {
         Position animationPos = actualState.getNextPosition();
         cropImage = image.getSubimage(animationPos.getX(), animationPos.getY(), actualState.getSpriteSize(), actualState.getSpriteSize());
         bufferedImage.getGraphics().drawImage(this.cropImage, position.getX(), position.getY(), width, height, null);
+
+        cmpt++;
+
+        if (cmpt == animationLenght) {
+            actualState = nextAnimation;
+        }
     }
 }

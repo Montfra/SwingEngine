@@ -1,6 +1,9 @@
 package swingEngine;
 
-import swingEngine.drawer.Sprite;
+import swingEngine.drawer.Drawer;
+import swingEngine.panel.DrawPanel;
+import swingEngine.panel.MenuPanel;
+import swingEngine.panel.SubMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,21 +11,44 @@ import java.awt.*;
 public class SwingEngine {
     private JFrame window;
     private DrawPanel panel;
+    private MenuPanel menu;
 
     public SwingEngine(String name, int width, int height) {
         this.window = new JFrame();
 
         window.setTitle(name);
         window.setSize(width, height);
+        window.setResizable(false);
+        centreWindow(window);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.panel = new DrawPanel(width, height);
-        panel.setLayout(new BorderLayout());
+    }
 
-        panel.setVisible(true);
+    public void setMenu(MenuPanel menu){
+        this.menu = menu;
+    }
+
+    private static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+    }
+    public void chowMenu(){
+        window.setVisible(false);
+        window.getContentPane().removeAll();
+        window.getContentPane().add(menu);
+        window.setVisible(true);
+    }
+
+    public void chowGame(){
+        window.setVisible(false);
+        window.getContentPane().removeAll();
         window.getContentPane().add(panel);
         window.setVisible(true);
-
+        window.revalidate();
+        window.repaint();
     }
 
     public void run() {
@@ -32,6 +58,8 @@ public class SwingEngine {
 
         final int TARGET_FPS = 60;
         final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+
+        chowMenu();
 
         while (true) {
             now = System.nanoTime();
@@ -43,7 +71,9 @@ public class SwingEngine {
             wait = (OPTIMAL_TIME - updateTime) / 1000000;
 
             try {
-                Thread.sleep(wait);
+                if (wait > 0){
+                    Thread.sleep(wait);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,8 +85,8 @@ public class SwingEngine {
         panel.getActionMap().put(name, action);
     }
 
-    public void addSprite(Sprite sprite) {
-        panel.addDrawer(sprite);
+    public void addDrawer(Drawer drawer) {
+        panel.addDrawer(drawer);
     }
 
 }

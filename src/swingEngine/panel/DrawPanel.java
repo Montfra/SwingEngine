@@ -1,4 +1,4 @@
-package swingEngine;
+package swingEngine.panel;
 
 import swingEngine.drawer.Drawer;
 
@@ -17,6 +17,8 @@ public class DrawPanel extends JPanel {
         super();
         this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         this.drawers = new ArrayList<>();
+        setLayout(new BorderLayout());
+        setVisible(true);
     }
 
     public void addDrawer(Drawer drawer){

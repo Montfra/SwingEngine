@@ -21,6 +21,14 @@ public class Animation {
         return spriteSize;
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
     public Position getNextPosition(){
         int toAdd = 0;
 

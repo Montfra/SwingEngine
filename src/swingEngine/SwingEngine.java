@@ -3,7 +3,6 @@ package swingEngine;
 import swingEngine.drawer.Drawer;
 import swingEngine.panel.DrawPanel;
 import swingEngine.panel.MenuPanel;
-import swingEngine.panel.SubMenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,14 +34,14 @@ public class SwingEngine {
         int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
         frame.setLocation(x, y);
     }
-    public void chowMenu(){
+    public void showMenu(){
         window.setVisible(false);
         window.getContentPane().removeAll();
         window.getContentPane().add(menu);
         window.setVisible(true);
     }
 
-    public void chowGame(){
+    public void showGame(){
         window.setVisible(false);
         window.getContentPane().removeAll();
         window.getContentPane().add(panel);
@@ -59,7 +58,7 @@ public class SwingEngine {
         final int TARGET_FPS = 60;
         final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
-        chowMenu();
+        showMenu();
 
         while (true) {
             now = System.nanoTime();

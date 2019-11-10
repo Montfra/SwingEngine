@@ -6,23 +6,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class SubMenuPanel extends JPanel {
     private JLabel title;
     private Boolean isHorizontalAlign;
     private JPanel horizontalAlign;
-    private HashMap<String, Component[]> subMenu;
-    private List<Component[]> back;
 
     public SubMenuPanel(String title) {
         super();
-        this.subMenu = new HashMap<>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.back = new ArrayList<>();
 
         this.title = new JLabel(title);
         this.title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -38,6 +31,11 @@ public class SubMenuPanel extends JPanel {
 
         this.setVisible(true);
     }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
     public void setHorizontalAlignement(){
         this.isHorizontalAlign = true;
     }
@@ -51,7 +49,7 @@ public class SubMenuPanel extends JPanel {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                game.chowGame();
+                game.showGame();
             }
         });
 

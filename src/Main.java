@@ -12,13 +12,16 @@ import java.awt.event.KeyEvent;
 
 public class Main {
     public static void main(String[] args){
+        // Create the window
         SwingEngine engine = new SwingEngine(new String("Test"), 800, 600);
 
+        // Create a main menu
         MenuPanel menu = new MenuPanel("MainMenu");
         menu.addComponent(new JButton("qsd"));
         menu.addComponent(new JButton("qsd"));
         menu.addComponent(new JButton("qsd"));
 
+        // Create sub menu for the main menu
         SubMenuPanel tmp = new SubMenuPanel("Sub");
         tmp.setHorizontalAlignement();
         tmp.addComponent(new JButton("qsdd"));
@@ -29,22 +32,26 @@ public class Main {
         SubMenuPanel tmp2 = new SubMenuPanel("Sub2");
         tmp2.addPlayButton(engine);
 
-        menu.addButtonGoToSubMenu("Sub", "Sub");
-        menu.addButtonGoToSubMenu(tmp, "Sub2", "Sub2");
+        // Add sub menus to the main menu
+        menu.addSubMenu(tmp);
+        menu.addSubMenu(tmp2);
 
-        menu.addSubMenu("Sub", tmp);
-        menu.addSubMenu("Sub2", tmp2);
+        // Add button to navigate between sub menu
+        menu.addSubMenuButton("Sub", "Sub");
+        menu.addSubMenuButtonOnSubMenu(tmp, "Sub2", tmp2);
 
+        // Add menus to the engine
         engine.setMenu(menu);
 
 
+        // Create the main character
         Sprite test = new Sprite("test.png", new Position(0, 0), 128, 128);
         test.addAnimation("basic", new Animation(0, 100, 8, 100, 1));
         test.addAnimation("basse", new Animation(0, 500, 8, 100, -2));
         test.setActualState("basic");
         engine.addDrawer(test);
 
-
+        // When we click Left button, the main character go to right
         engine.addController(KeyEvent.VK_LEFT, "left", 0, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -53,6 +60,7 @@ public class Main {
             }
         });
 
+        // All done, we can launch the game
         engine.run();
     }
 }

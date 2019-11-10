@@ -19,11 +19,11 @@ public class MenuPanel extends SubMenuPanel {
         back = new ArrayList<>();
     }
 
-    public void addSubMenu(String name, SubMenuPanel subMenu){
-        this.subMenu.put(name, subMenu.getComponents());
+    public void addSubMenu(SubMenuPanel subMenu){
+        this.subMenu.put(subMenu.getTitle(), subMenu.getComponents());
     }
 
-    private void changeMenu(String nameSubMenu){
+    private void changeCurrentMenu(String nameSubMenu){
         this.back.add(this.getComponents());
 
         this.removeAll();
@@ -34,7 +34,7 @@ public class MenuPanel extends SubMenuPanel {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                back();
+                goBack();
             }
         });
         Dimension size = back.getPreferredSize();
@@ -52,7 +52,7 @@ public class MenuPanel extends SubMenuPanel {
         this.repaint();
     }
 
-    public void back(){
+    public void goBack(){
         this.removeAll();
 
         for (Component c : back.get(back.size()-1)){
@@ -64,12 +64,12 @@ public class MenuPanel extends SubMenuPanel {
         this.repaint();
     }
 
-    public void addButtonGoToSubMenu(String nameButton, String nameSubMenu) {
+    public void addSubMenuButton(String nameButton, String nameSubMenu) {
         JButton button = new JButton(nameButton);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                changeMenu(nameSubMenu);
+                changeCurrentMenu(nameSubMenu);
             }
         });
 
@@ -79,18 +79,18 @@ public class MenuPanel extends SubMenuPanel {
 
     }
 
-    public void addButtonGoToSubMenu(SubMenuPanel subMenu, String nameButton, String nameSubMenu) {
+    public void addSubMenuButtonOnSubMenu(SubMenuPanel on, String nameButton, SubMenuPanel goTo) {
         JButton button = new JButton(nameButton);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                changeMenu(nameSubMenu);
+                changeCurrentMenu(goTo.getTitle());
             }
         });
 
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        subMenu.addComponent(button);
+        on.addComponent(button);
     }
 
 }

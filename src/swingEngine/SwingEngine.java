@@ -79,9 +79,9 @@ public class SwingEngine {
         }
     }
 
-    public void addController(int key, String name, int keyRelease, AbstractAction action){
-        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key, keyRelease), name);
-        panel.getActionMap().put(name, action);
+    public void addController(int key, int keyRelease, AbstractAction action){
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key, keyRelease), key);
+        panel.getActionMap().put(key, action);
     }
 
     public void addDrawer(Drawer drawer) {

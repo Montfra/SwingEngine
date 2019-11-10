@@ -64,12 +64,12 @@ public class MenuPanel extends SubMenuPanel {
         this.repaint();
     }
 
-    public void addSubMenuButton(String nameButton, String nameSubMenu) {
+    public void addSubMenuButton(String nameButton, SubMenuPanel subMenu) {
         JButton button = new JButton(nameButton);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                changeCurrentMenu(nameSubMenu);
+                changeCurrentMenu(subMenu.getTitle());
             }
         });
 

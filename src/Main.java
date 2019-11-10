@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 public class Main {
     public static void main(String[] args){
         // Create the window
-        SwingEngine engine = new SwingEngine(new String("Test"), 800, 600);
+        SwingEngine engine = new SwingEngine("Test", 800, 600);
 
         // Create a main menu
         MenuPanel menu = new MenuPanel("MainMenu");
@@ -37,7 +37,7 @@ public class Main {
         menu.addSubMenu(tmp2);
 
         // Add button to navigate between sub menu
-        menu.addSubMenuButton("Sub", "Sub");
+        menu.addSubMenuButton("Sub", tmp);
         menu.addSubMenuButtonOnSubMenu(tmp, "Sub2", tmp2);
 
         // Add menus to the engine
@@ -52,7 +52,7 @@ public class Main {
         engine.addDrawer(test);
 
         // When we click Left button, the main character go to right
-        engine.addController(KeyEvent.VK_LEFT, "left", 0, new AbstractAction() {
+        engine.addController(KeyEvent.VK_LEFT, 0, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 test.setPosition(new Position(test.getPosition().getX() + 1, test.getPosition().getY()));

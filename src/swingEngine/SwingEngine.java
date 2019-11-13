@@ -6,6 +6,7 @@ import swingEngine.panel.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 public class SwingEngine {
     private JFrame window;
@@ -82,6 +83,10 @@ public class SwingEngine {
     public void addController(int key, int keyRelease, AbstractAction action){
         panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key, keyRelease), key);
         panel.getActionMap().put(key, action);
+    }
+
+    public void addMouseListener(MouseListener listener) {
+        window.addMouseListener(listener);
     }
 
     public void addDrawer(Drawer drawer) {

@@ -2,6 +2,7 @@ package swingEngine.drawer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class StaticImageDrawer implements Drawer {
@@ -12,13 +13,13 @@ public class StaticImageDrawer implements Drawer {
     private int height;
     private BufferedImage image;
 
-    public StaticImageDrawer(String url, int x, int y, int width, int height) {
+    public StaticImageDrawer(String path, int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         try {
-            image = ImageIO.read(this.getClass().getResourceAsStream(url));
+            this.image = ImageIO.read(new FileInputStream(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

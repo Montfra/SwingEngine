@@ -7,12 +7,27 @@ public class Animation {
     private int speed;
     private int cmpt;
     private int negativeCmpt;
+    private boolean animationOnY;
 
     public Animation(int x, int y, int length, int spriteSize, int speed) {
         this.position = new Position(x, y);
         this.length = length;
         this.spriteSize = spriteSize;
-        this.cmpt = -1;
+        this.cmpt = 0;
+        this.negativeCmpt = 0;
+        this.speed = speed;
+        this.animationOnY = false;
+    }
+
+    public void setAnimationOnY() {
+        this.animationOnY = true;
+    }
+
+    public Animation(int x, int y, int length, int spriteSize, int speed, int decalage) {
+        this.position = new Position(x, y);
+        this.length = length;
+        this.spriteSize = spriteSize;
+        this.cmpt = decalage;
         this.negativeCmpt = 0;
         this.speed = speed;
     }
@@ -30,14 +45,12 @@ public class Animation {
     }
 
     public Position getNextPosition(){
-        int toAdd = 0;
 
         if (speed > 0) {
             cmpt += speed;
             if (cmpt >= length){
                 cmpt = 0;
             }
-            toAdd = (cmpt*spriteSize);
         }
         else {
             if (negativeCmpt == speed) {
@@ -46,11 +59,14 @@ public class Animation {
                     cmpt = 0;
                 }
                 negativeCmpt = 0;
-                toAdd = (cmpt*spriteSize);
+
             }
             negativeCmpt--;
         }
-
+        int toAdd = (cmpt*spriteSize);
+        if (animationOnY){
+            return new Position(position.getX(), position.getY() + toAdd);
+        }
         return new Position(position.getX() + toAdd, position.getY());
     }
 

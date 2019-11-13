@@ -20,6 +20,7 @@ public class Sprite implements Drawer{
     private Animation nextAnimation;
     private int animationLenght;
     private int cmpt;
+    private boolean isVisible;
 
     public Sprite(String path, Position position, int width, int height) {
         this.width = width;
@@ -31,6 +32,15 @@ public class Sprite implements Drawer{
             e.printStackTrace();
         }
         animations = new HashMap<>();
+        this.isVisible = true;
+    }
+
+    public void changeImg(String path) {
+        try {
+            this.image = ImageIO.read(new FileInputStream(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Position getPosition() {
@@ -79,16 +89,32 @@ public class Sprite implements Drawer{
         cmpt = 0;
     }
 
+    public void setVisible(Boolean visible){
+        this.isVisible = visible;
+    }
+
+    public void rotateRight() {
+        BufferedImage   newImage = new BufferedImage( image.getHeight(), image.getWidth(), image.getType() );
+
+        for( int i=0 ; i < image.getWidth() ; i++ )
+            for( int j=0 ; j < image.getHeight() ; j++ )
+                newImage.setRGB( image.getHeight()-1-j, i, image.getRGB(i,j) );
+
+        this.image = newImage;
+    }
+
     @Override
     public void draw(BufferedImage bufferedImage) {
-        Position animationPos = actualState.getNextPosition();
-        cropImage = image.getSubimage(animationPos.getX(), animationPos.getY(), actualState.getSpriteSize(), actualState.getSpriteSize());
-        bufferedImage.getGraphics().drawImage(this.cropImage, position.getX(), position.getY(), width, height, null);
+        if (isVisible) {
+            Position animationPos = actualState.getNextPosition();
+            cropImage = image.getSubimage(animationPos.getX(), animationPos.getY(), actualState.getSpriteSize(), actualState.getSpriteSize());
+            bufferedImage.getGraphics().drawImage(cropImage, position.getX(), position.getY(), width, height, null);
 
-        cmpt++;
+            cmpt++;
 
-        if (cmpt == animationLenght) {
-            actualState = nextAnimation;
+            if (cmpt == animationLenght) {
+                actualState = nextAnimation;
+            }
         }
     }
 }
